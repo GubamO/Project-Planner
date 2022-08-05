@@ -1,1 +1,1 @@
-# Recap-Dom
+# Timeouts and intervals
