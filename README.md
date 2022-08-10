@@ -6,8 +6,7 @@ Creation d'un planner
 
 
 
--- membre groupe:
+### membre groupe:
 
-¸Baudson Guillaume
-
-¸Vervoort Eddy
+Baudson Guillaume
+Vervoort Eddy
