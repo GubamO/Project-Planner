@@ -1,4 +1,5 @@
 let ToDoList = [];
+let object =[];
 const theMain = document.querySelector("main");
 
 const aInput = document.createElement("input");
@@ -9,7 +10,7 @@ aBut.innerText= "name";
 theMain.appendChild(aBut);
 
 aBut.addEventListener("click",() => {
-    let object =[];
+  
     switch(aBut.innerText) {  
         case "name": object.push(`${aBut.innerText} : ${aInput.value}`);
             aBut.innerText = "descript";
@@ -18,18 +19,20 @@ aBut.addEventListener("click",() => {
             aBut.innerText = "Due Date";
          break;
         case "Due Date": object.push(`${aBut.innerText} : ${aInput.value}`);
+            object.push("valid : false");
             aInput.style.visibility = "hidden"; 
             aBut.innerText = "val to do";
         
          break;
-        case "val to do": ToDoList.push(object);
-             aBut.innerText = "name"; 
-             aInput.style.visibility= "visible";
-             object = [];
+        case "val to do": 
+            
+            ToDoList.push(object);
+            aBut.innerText = "name"; 
+            aInput.style.visibility= "visible";
+            object = [];
          break;
         } 
     aInput.value = "";
+    console.log(ToDoList)
         
 });
- 
-//setInterval(() => {console.log(ToDoList)},1000);
