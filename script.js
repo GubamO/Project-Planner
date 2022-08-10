@@ -22,7 +22,6 @@ aBut.addEventListener("click",() => {
             object.push("valid : false");
             aInput.style.visibility = "hidden"; 
             aBut.innerText = "val to do";
-        
          break;
         case "val to do": 
             
@@ -33,6 +32,4 @@ aBut.addEventListener("click",() => {
          break;
         } 
     aInput.value = "";
-    console.log(ToDoList)
-        
 });
