@@ -3,11 +3,17 @@ const theMain = document.querySelector("main");
 
 
 const aInput = document.createElement("input");
+aInput.classList.add("styleInput");
+aInput.classList.add("posInput");
 theMain.appendChild(aInput);
 
 const aBut = document.createElement("button");
+aBut.classList.add("styleBut");
+aBut.classList.add("butPos");
 aBut.innerText= "name";
 theMain.appendChild(aBut);
+
+theMain.appendChild(creatSelectShowCol());
 
 aBut.addEventListener("click",() => setInput());
 aInput.addEventListener("keyup", event => {
@@ -15,6 +21,18 @@ aInput.addEventListener("keyup", event => {
         setInput();
     }
 });
+
+function table(){
+    const titleDiv = ["ToDo","Doing","Done"];
+    for(let i = 0; i < titleDiv.length; i++){
+        const tableDiv = document.createElement("div");
+        tableDiv.classList.add(titleDiv[i]);
+        const divTitle = document.createElement("h4");
+        divTitle.innerText = titleDiv[i];
+        tableDiv.appendChild(divTitle);
+        theMain.appendChild(tableDiv);
+    }
+}
 table();
 
 let articleElement = document.createElement("article");
@@ -40,19 +58,19 @@ function setInput(){
             let dateDue = new Date(dates.getTime() + day);
             paraduedate.innerText = dateDue.toLocaleDateString();
             articleElement.appendChild(paraduedate);
-            
             aBut.innerText = "val to do";
             aInput.style.visibility = "hidden";
          break;
         case "val to do": 
             articleElement.classList.add("toDo");
             let descriptArt = document.createElement("button");
+            descriptArt.classList.add("styleBut");
             descriptArt.classList.add("showD");
             descriptArt.innerText = "See description";
-            
             articleElement.appendChild(descriptArt);
             const selectArt = document.createElement("select");
             selectArt.classList.add("selectPos");
+            selectArt.classList.add("styleSelect");
             const nameOpt = ["to do","Doing","Done","trach"];
             for(let i = 0; i < nameOpt.length; i++){
                 const optionSelect = document.createElement("option");
@@ -61,8 +79,9 @@ function setInput(){
             }
             articleElement.appendChild(selectArt);
             const butUrg = document.createElement("button");
-            butUrg.innerText = "Urgent";
+            butUrg.classList.add("styleBut");
             butUrg.classList.add("urgent");
+            butUrg.innerText = "Urgent";
             articleElement.appendChild(butUrg);
             const colToDo = document.querySelector(".ToDo");
             colToDo.appendChild(articleElement);
@@ -90,19 +109,31 @@ function ShowDescript(){
         }}); 
     }
 }
+function todoUrgent(){
+    const butUrgent = document.querySelectorAll(".urgent")
+    for( let item of butUrgent){
+        item.addEventListener("click",first );
+    }
+}
+function first(event) {
+        const elementFirst = event.target.parentNode;
+        const parentElement = elementFirst.parentNode;
+        console.log(parentElement);
+        parentElement.insertBefore(elementFirst,parentElement.childNodes[1]);            
+}
+
+
+
 
 function changeSelect(){
     const theSelcet = document.getElementsByClassName("selectPos");
-
     for(let item of theSelcet){
         item.addEventListener("change",actionSelect);
     }
 }
+
 function actionSelect(event){
-    const colTodo = document.querySelector(".ToDo");
-    const colDoing = document.querySelector(".Doing");
-    const colDone = document.querySelector(".Done");
-    const targetParent = event.target.parentNode
+    const targetParent = event.target.parentNode;
     const parentArt = targetParent.parentNode;
     switch(event.target.value){
         case "to do":parentArt.removeChild(targetParent); 
@@ -119,32 +150,47 @@ function actionSelect(event){
     }
 }
 
-function todoUrgent(){
-    const butUrgent = document.querySelectorAll(".urgent")
-    for( let item of butUrgent){
-        item.addEventListener("click",first );
-    }
+function creatSelectShowCol(){
+    const buttonSelect = document.createElement('select');
+    buttonSelect.classList.add('showDiv');
+    buttonSelect.classList.add("styleSelect");
+    buttonSelect.classList.add("selectPos");  
+    const nameOpt1 = ["To Do","Doing", "Done", "All"];
+    for(let i = 0; i < nameOpt1.length; i++ ){
+        const optionSelect = document.createElement('option');
+        optionSelect.innerText = nameOpt1[i]; 
+        if( nameOpt1[i]  === "All"){
+            optionSelect.setAttribute("selected","");
+        }   
+        buttonSelect.appendChild(optionSelect);}
+    return buttonSelect;
 }
- function first(event) {
-            const elementFirst = event.target.parentNode;
-            
-            const parentElement = elementFirst.parentNode;
-            console.log(parentElement);
-            parentElement.insertBefore(elementFirst,parentElement.childNodes[1]);
-            
 
+
+const colTodo = document.querySelector(".ToDo");
+const colDoing = document.querySelector(".Doing");
+const colDone = document.querySelector(".Done");
+const showCol = document.getElementsByClassName('showDiv');
+
+for(let item of showCol){
+    item.addEventListener("change",(event)=> {
+        switch(event.target.value){
+            case "To Do": colTodo.style.display = "block";
+                        colDoing.style.display = "none";
+                        colDone.style.display = "none";
+            break;
+            case "Doing":colTodo.style.display = "none";
+            colDoing.style.display = "block";
+            colDone.style.display = "none";
+            break;
+            case "Done": colTodo.style.display = "none";
+            colDoing.style.display = "none";
+            colDone.style.display = "block"; 
+            break;
+            case "All": colTodo.style.display = "block";
+            colDoing.style.display = "block";
+            colDone.style.display = "block";
+            break;
         }
-function table(){
-    const titleDiv = ["ToDo","Doing","Done"];
-    for(let i = 0; i < titleDiv.length; i++){
-        const tableDiv = document.createElement("div");
-        tableDiv.classList.add(titleDiv[i]);
-        const divTitle = document.createElement("h4");
-        divTitle.innerText = titleDiv[i];
-        tableDiv.appendChild(divTitle);
-        theMain.appendChild(tableDiv);
-    }
-    
-}
-
-
+    })
+ }
