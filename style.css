@@ -6,31 +6,6 @@ body {
   background: #780206; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to left, #780206, #061161);
   font-family: "Pacifico", cursive;
-  font-size: 30px;
-  margin: 50px;
-  top: 50%;
-  left: 50%;
-}
-body h4 {
-  display: inline;
-  color: white;
-}
-body h4::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  margin: 0;
-  background: white;
-  transform: scale(0);
-  transition: transform 0.2s ease-in-out;
-}
-body h4:hover::after {
-  transform: scale(1);
-}
-body .toDo {
-  color: white;
 }
 
 .styleInput {
@@ -55,19 +30,35 @@ body .toDo {
   font-size: 15px;
 }
 
-.styleSelect-selected {
-  border-radius: 1rem;
-  background: #870000; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #870000, #190a05);
-  color: black;
-  font-family: "Pacifico", cursive;
-  font-size: 15px;
+.styleColTodo {
+  border: 5px solid black;
+  margin: 10px;
+  color: white;
+}
+.styleColTodo h4 {
+  display: inline;
+  color: white;
+}
+.styleColTodo h4::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  margin: 0;
+  background: white;
+  transform: scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+.styleColTodo h4:hover::after {
+  transform: scale(1);
 }
 
 main {
+  width: auto;
   display: grid;
-  grid-template-columns: 80% 20%;
-  grid-template-rows: auto;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 10% 30% 30% 30%;
 }
 
 .posInput {
@@ -75,22 +66,53 @@ main {
   justify-self: flex-start;
 }
 
+.butPos {
+  grid-area: 1/1/2/2;
+  justify-self: flex-end;
+}
+
+.selectPos {
+  grid-area: 1/2/2/3;
+  justify-self: center;
+}
+
 .ToDo {
-  display: block;
+  grid-column: 1;
 }
 
 .Doing {
-  display: none;
+  grid-column: 1;
 }
 
 .Done {
-  display: none;
+  grid-column: 1;
 }
 
 @media only screen and (min-width: 1024px) {
   main {
+    width: 80%;
     display: grid;
     grid-template-columns: 33.3% 33.4% 33.3%;
     grid-template-rows: 10% 90%;
+  }
+  .posInput {
+    grid-area: 1/1/2/2;
+    justify-self: center;
+  }
+  .butPos {
+    grid-area: 1/1/2/2;
+    justify-self: flex-end;
+  }
+  .selectPos {
+    grid-area: 1/3/2/4;
+  }
+  .ToDo {
+    grid-area: 2/1/3/2;
+  }
+  .Doing {
+    grid-area: 2/2/3/3;
+  }
+  .Done {
+    grid-area: 2/3/3/4;
   }
 }/*# sourceMappingURL=style.css.map */

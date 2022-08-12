@@ -1,7 +1,6 @@
 
 const theMain = document.querySelector("main");
 
-
 const aInput = document.createElement("input");
 aInput.classList.add("styleInput");
 aInput.classList.add("posInput");
@@ -27,6 +26,7 @@ function table(){
     for(let i = 0; i < titleDiv.length; i++){
         const tableDiv = document.createElement("div");
         tableDiv.classList.add(titleDiv[i]);
+        tableDiv.classList.add("styleColTodo");
         const divTitle = document.createElement("h4");
         divTitle.innerText = titleDiv[i];
         tableDiv.appendChild(divTitle);
@@ -44,23 +44,30 @@ function setInput(){
             titleArtic.innerText = aInput.value;
             articleElement.appendChild(titleArtic);
             aBut.innerText = "descript";
-        break;
+         break;
         case "descript":  const paraArtic = document.createElement("p");
-        paraArtic.style.display = "none";
+            paraArtic.style.display = "none";
             paraArtic.classList.add("description");
             paraArtic.innerText = aInput.value;
             articleElement.appendChild(paraArtic);
             const dueDaArtic = document.createElement("p");
             dueDaArtic.innerText = dates.toLocaleDateString();
             articleElement.appendChild(dueDaArtic);
-            const paraduedate = document.createElement("p");
-            let day = 1000*60*60*24*5;
-            let dateDue = new Date(dates.getTime() + day);
-            paraduedate.innerText = dateDue.toLocaleDateString();
-            articleElement.appendChild(paraduedate);
-            aBut.innerText = "val to do";
-            aInput.style.visibility = "hidden";
+            aBut.innerText = "time";
          break;
+        case "time":    
+            const paraduedate = document.createElement("p");
+            const numbDay = aInput.value; 
+            if(isNaN(numbDay)){
+                alert("a number SVP"); break; 
+            }
+            else{let day = 1000*60*60*24*numbDay;
+                let dateDue = new Date(dates.getTime() + day);
+                paraduedate.innerText = dateDue.toLocaleDateString();
+                articleElement.appendChild(paraduedate); 
+                aBut.innerText = "val to do";
+                aInput.style.visibility = "hidden";}
+            break;
         case "val to do": 
             articleElement.classList.add("toDo");
             let descriptArt = document.createElement("button");
@@ -136,14 +143,14 @@ function actionSelect(event){
     const targetParent = event.target.parentNode;
     const parentArt = targetParent.parentNode;
     switch(event.target.value){
-        case "to do":parentArt.removeChild(targetParent); 
-                    colTodo.appendChild(targetParent);
+        case "to do":colTodo.appendChild(targetParent);
+                    parentArt.removeChild(targetParent); 
                 break;
-        case "Doing":parentArt.removeChild(targetParent);
-                    colDoing.appendChild(targetParent);
+        case "Doing": colDoing.appendChild(targetParent);
+                   parentArt.removeChild(targetParent);
                 break;
-        case "Done" :parentArt.removeChild(targetParent); 
-                    colDone.appendChild(targetParent);
+        case "Done" : colDone.appendChild(targetParent);
+                    parentArt.removeChild(targetParent);
                 break;
         case "trach":confirm("are you sure ?")? parentArt.removeChild(targetParent):0;
              break;
@@ -175,21 +182,27 @@ const showCol = document.getElementsByClassName('showDiv');
 for(let item of showCol){
     item.addEventListener("change",(event)=> {
         switch(event.target.value){
-            case "To Do": colTodo.style.display = "block";
-                        colDoing.style.display = "none";
-                        colDone.style.display = "none";
+            case "To Do": theMain.insertBefore(colTodo,theMain.childNodes[3]); 
+                colTodo.style.visibility = "visible";
+                colDoing.style.visibility = "hidden";
+                colDone.style.visibility = "hidden";
             break;
-            case "Doing":colTodo.style.display = "none";
-            colDoing.style.display = "block";
-            colDone.style.display = "none";
+            case "Doing":theMain.insertBefore(colDoing,theMain.childNodes[3]);
+                colTodo.style.visibility = "hidden";
+                colDoing.style.visibility = "visible";
+                colDone.style.visibility = "hidden";
             break;
-            case "Done": colTodo.style.display = "none";
-            colDoing.style.display = "none";
-            colDone.style.display = "block"; 
+            case "Done":theMain.insertBefore(colDone,theMain.childNodes[3]); 
+                colTodo.style.visibility = "hidden";
+                colDoing.style.visibility = "hidden";
+                colDone.style.visibility = "visible"; 
             break;
-            case "All": colTodo.style.display = "block";
-            colDoing.style.display = "block";
-            colDone.style.display = "block";
+            case "All":theMain.insertBefore(colTodo,theMain.childNodes[3]);
+                theMain.insertBefore(colDoing,theMain.childNodes[4]);
+                theMain.insertBefore(colDone,theMain.childNodes[5]); 
+                colTodo.style.visibility = "visible";
+                colDoing.style.visibility = "visible";
+                colDone.style.visibility = "visible";
             break;
         }
     })
