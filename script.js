@@ -125,13 +125,8 @@ function todoUrgent(){
 function first(event) {
         const elementFirst = event.target.parentNode;
         const parentElement = elementFirst.parentNode;
-        console.log(parentElement);
         parentElement.insertBefore(elementFirst,parentElement.childNodes[1]);            
 }
-
-
-
-
 function changeSelect(){
     const theSelcet = document.getElementsByClassName("selectPos");
     for(let item of theSelcet){
